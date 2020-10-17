@@ -1,8 +1,8 @@
 -module(bowling_game).
 -export([new/0, roll/2, score/1]).
 
-new() -> ok.
+new() -> 0.
 
-roll(Game, _Pins) -> Game.
+roll(Game, Pins) -> Game + Pins.
 
-score(_Game) -> 0.
+score(Game) -> Game.
