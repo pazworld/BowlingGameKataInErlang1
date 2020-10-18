@@ -27,6 +27,11 @@ one_strike_test() ->
     G5 = roll_many(G4, 16, 0),
     ?assertEqual(24, bowling_game:score(G5)).
 
+perfect_game_test() ->
+    G = bowling_game:new(),
+    G2 = roll_many(G, 12, 10),
+    ?assertEqual(300, bowling_game:score(G2)).
+
 roll_many(Game, N, Pins) ->
     PinList = lists:duplicate(N, Pins),
     lists:foldl(fun(P, G) -> bowling_game:roll(G, P) end, Game, PinList).
