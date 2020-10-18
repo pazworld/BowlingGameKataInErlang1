@@ -13,11 +13,9 @@ score(Game) ->
         IsStrike = is_strike(FrameIndex, Rolls),
         IsSpare = is_spare(FrameIndex, Rolls),
         if IsStrike ->
-            Pin3 = lists:nth(FrameIndex + 2, Rolls),
-            {FrameIndex + 1, Score + 10 + Pin2 + Pin3}
+            {FrameIndex + 1, Score + 10 + strike_bonus(FrameIndex, Rolls)}
         ;  IsSpare ->
-            Pin3 = lists:nth(FrameIndex + 2, Rolls),
-            {FrameIndex + 2, Score + 10 + Pin3}
+            {FrameIndex + 2, Score + 10 + spare_bonus(FrameIndex, Rolls)}
         ;  Pin1 + Pin2 =/= 10 ->
             {FrameIndex + 2, Score + Pin1 + Pin2}
         end
@@ -30,3 +28,9 @@ is_strike(FrameIndex, Rolls) ->
 
 is_spare(FrameIndex, Rolls) ->
     10 =:= lists:nth(FrameIndex, Rolls) + lists:nth(FrameIndex + 1, Rolls).
+
+strike_bonus(FrameIndex, Rolls) ->
+    lists:nth(FrameIndex + 1, Rolls) + lists:nth(FrameIndex + 2, Rolls).
+
+spare_bonus(FrameIndex, Rolls) ->
+    lists:nth(FrameIndex + 2, Rolls).
