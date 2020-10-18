@@ -10,8 +10,9 @@ score(Game) ->
     F = fun(_Frame, {FrameIndex, Score}) ->
         Pin1 = lists:nth(FrameIndex, Rolls),
         Pin2 = lists:nth(FrameIndex + 1, Rolls),
+        IsStrike = is_strike(FrameIndex, Rolls),
         IsSpare = is_spare(FrameIndex, Rolls),
-        if Pin1 =:= 10 ->
+        if IsStrike ->
             Pin3 = lists:nth(FrameIndex + 2, Rolls),
             {FrameIndex + 1, Score + 10 + Pin2 + Pin3}
         ;  IsSpare ->
@@ -23,6 +24,9 @@ score(Game) ->
     end,
     {_, Score} = lists:foldl(F, {1, 0}, lists:seq(1, 10)),
     Score.
+
+is_strike(FrameIndex, Rolls) ->
+    10 =:= lists:nth(FrameIndex, Rolls).
 
 is_spare(FrameIndex, Rolls) ->
     10 =:= lists:nth(FrameIndex, Rolls) + lists:nth(FrameIndex + 1, Rolls).
